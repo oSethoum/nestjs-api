@@ -34,9 +34,7 @@ export class PostsService {
 
   async update(id: number, updatePostDto: UpdatePostDto) {
     const post = await this.postsRepository.findOne(id);
-    post.title = updatePostDto.title;
-    post.description = updatePostDto.description;
-    return this.postsRepository.save(post);
+    return this.postsRepository.save({ ...post, ...updatePostDto });
   }
 
   async remove(id: number) {

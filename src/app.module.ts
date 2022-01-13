@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { SqliteConnectionOptions } from "typeorm/driver/sqlite/SqliteConnectionOptions";
+import { PostsModule } from "./posts/posts.module";
+import { UsersModule } from "./users/users.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { Post } from "./posts/entities/post.entity";
-import { PostsModule } from "./posts/posts.module";
 import { User } from "./users/entities/user.entity";
-import { UsersModule } from "./users/users.module";
 
 const config: SqliteConnectionOptions = {
   type: "sqlite",
@@ -16,7 +16,7 @@ const config: SqliteConnectionOptions = {
 };
 
 @Module({
-  imports: [PostsModule, TypeOrmModule.forRoot(config), UsersModule],
+  imports: [TypeOrmModule.forRoot(config), UsersModule, PostsModule],
   controllers: [AppController],
   providers: [AppService],
 })
