@@ -5,9 +5,7 @@ import { LocalAuthGuard } from "./auth/local-auth.guard";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const reflector = app.get(Reflector);
-  app.setGlobalPrefix("api");
-  app.useGlobalGuards(new LocalAuthGuard(reflector));
+  // app.setGlobalPrefix("api");
 
   const config = new DocumentBuilder()
     .setTitle("Nest API")

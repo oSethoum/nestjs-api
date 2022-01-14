@@ -24,7 +24,10 @@ export class UsersService {
   }
 
   async findOneUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username } });
+    return await this.userRepository.createQueryBuilder().addSelect(
+      "user.password",
+    ).where({ username })
+      .getOne();
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

@@ -12,7 +12,6 @@ export class AuthService {
       const { password, ...rest } = user;
       return rest;
     }
-
     return undefined;
   }
 }
