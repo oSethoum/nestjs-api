@@ -1,9 +1,13 @@
-import { NestFactory } from "@nestjs/core";
+import { NestFactory, Reflector } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
+import { LocalAuthGuard } from "./auth/local-auth.guard";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const reflector = app.get(Reflector);
+  app.setGlobalPrefix("api");
+  app.useGlobalGuards(new LocalAuthGuard(reflector));
 
   const config = new DocumentBuilder()
     .setTitle("Nest API")
@@ -12,7 +16,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api/swagger", app, document);
+  SwaggerModule.setup("docs", app, document);
 
   await app.listen(3000);
 }
